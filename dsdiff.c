@@ -35,7 +35,6 @@
 #define off_t int64_t
 #endif
 
-
 typedef struct dsdiff_read_context_t {
     chunk_header_t  current_chunk;
     uint64_t        bytes_read;
@@ -162,8 +161,8 @@ static int dsdiff_read_open(FILE *fp, dsd_reader_t *reader)
                 reader->compressed = 1;
 
                 context->dst_decoder = dst_decoder_create(reader->channel_count, reader->sample_rate / 44100, dsdiff_dst_decode_done, dsdiff_dst_decode_error, context);
-                context->dst_decode_done = PTHREAD_COND_INITIALIZER;
-                context->dst_decode_done_mutex = PTHREAD_MUTEX_INITIALIZER;
+                context->dst_decode_done = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
+                context->dst_decode_done_mutex = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
 
                 /* The next 'real' chunk is after the DSTI, so find where the DSTI chunk ends... */
                 start = ftello(fp);

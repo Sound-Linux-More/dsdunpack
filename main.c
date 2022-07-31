@@ -119,9 +119,9 @@ static int parse_options(int argc, char *argv[])
         /* Detect output format from filename if not specified */
         if (!opts.output_dsf && !opts.output_dsdiff) {
             size_t oflen = strlen(opts.output_file);
-            if (oflen > 4 && !strnicmp(opts.output_file + oflen - 4, ".dff", 4)) {
+            if (oflen > 4 && !strcasecmp(opts.output_file + oflen - 4, ".dff")) {
                 opts.output_dsdiff = 1;
-            } else if (oflen > 4 && !strnicmp(opts.output_file + oflen - 4, ".dsf", 4)) {
+            } else if (oflen > 4 && !strcasecmp(opts.output_file + oflen - 4, ".dsf")) {
                 opts.output_dsf = 1;
             } else {
                 fprintf(stderr, "no output format specified\n");
