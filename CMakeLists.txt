@@ -28,7 +28,7 @@ include(FindThreads)
 # Include directory paths
 include_directories(${dsdunpack_SOURCE_DIR})
 
-include_directories("./lib/libdstdec")
+include_directories("./src/lib/libdstdec")
 
 # Extra flags for GCC
 if (CMAKE_COMPILER_IS_GNUCC)
@@ -50,21 +50,21 @@ if (MSVC)
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} pthreadVC2_static.lib")
     
     # MSVC doesn't come with a getopt implementation
-    include_directories("./lib/getopt")
-    file(GLOB getopt_headers ./lib/getopt/*.h)
-    file(GLOB getopt_sources ./lib/getopt/*.c)
+    include_directories("./src/lib/getopt")
+    file(GLOB getopt_headers ./src/lib/getopt/*.h)
+    file(GLOB getopt_sources ./src/lib/getopt/*.c)
     source_group(getopt FILES ${getopt_headers} ${getopt_sources})
 else()
     add_definitions(-D_FILE_OFFSET_BITS=64)
     set(CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIRARIES} -lpthread")
 endif()
 
-file(GLOB libdstdec_headers ./lib/libdstdec/*.h)
-file(GLOB libdstdec_sources ./lib/libdstdec/*.c)
+file(GLOB libdstdec_headers ./src/lib/libdstdec/*.h)
+file(GLOB libdstdec_sources ./src/lib/libdstdec/*.c)
 source_group(libdstdec FILES ${libdstdec_headers} ${libdstdec_sources})
 
-file(GLOB main_headers ./*.h)
-file(GLOB main_sources ./*.c)
+file(GLOB main_headers ./src/*.h)
+file(GLOB main_sources ./src/*.c)
 source_group(main FILES ${main_headers} ${main_sources})
 
 add_executable(dsdunpack 
